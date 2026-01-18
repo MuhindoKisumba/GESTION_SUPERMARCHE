@@ -1,0 +1,189 @@
+# RAPPORT DSIG
+
+## Système de gestion d’un supermarché (PostgreSQL)
+
+---
+
+## 1. Introduction
+
+Ce rapport présente la conception et l’implémentation d’un système de gestion d’un supermarché à l’aide du SGBD **PostgreSQL**. Le travail s’inscrit dans le cadre du cours **DSIG (Développement des Systèmes d’Information et de Gestion)** et vise à mettre en pratique les notions de modélisation, contraintes d’intégrité, sécurité, automatisation (triggers), procédures stockées et requêtes avancées.
+
+---
+
+## 2. Objectifs du système
+
+* Gérer les **produits**, **catégories** et **fournisseurs**
+* Suivre le **stock** et les mouvements
+* Gérer les **clients**, **employés** et **ventes**
+* Enregistrer les **paiements**
+* Assurer la **sécurité** via rôles et privilèges
+* Fournir des **rapports statistiques** fiables
+
+---
+
+## 3. Description générale de la base de données
+
+La base de données est relationnelle et respecte les règles de normalisation. Elle est composée des tables principales suivantes :
+
+* categorie
+* fournisseur
+* produit
+* client
+* employe
+* stock
+* vente
+* ligne_vente
+* paiement
+* audit_stock
+* utilisateur
+
+Les relations sont assurées par des **clés primaires** et **clés étrangères** garantissant l’intégrité référentielle.
+
+---
+
+## 4. Description des tables principales
+
+### 4.1 Table categorie
+
+Permet de classifier les produits du supermarché.
+
+### 4.2 Table fournisseur
+
+Contient les informations des fournisseurs (nom, téléphone, email, pays).
+
+### 4.3 Table produit
+
+Représente les produits vendus avec leur prix d’achat, prix de vente, catégorie et fournisseur.
+
+### 4.4 Table client
+
+Enregistre les clients et leur statut de fidélité.
+
+### 4.5 Table employe
+
+Gère les employés du supermarché (fonction, salaire, statut actif).
+
+### 4.6 Table stock
+
+Suit la quantité disponible de chaque produit et le seuil d’alerte.
+
+### 4.7 Table vente
+
+Enregistre chaque vente effectuée avec le client, l’employé et le total.
+
+### 4.8 Table ligne_vente
+
+Détaille les produits vendus par vente (quantité, prix unitaire, sous-total).
+
+### 4.9 Table paiement
+
+Gère les paiements avec différents modes (Cash, Mobile Money, Carte).
+
+### 4.10 Table audit_stock
+
+Historise toutes les opérations importantes sur le stock (ajout, retrait, correction).
+
+### 4.11 Table utilisateur
+
+Permet la gestion des accès et des rôles applicatifs.
+
+---
+
+## 5. Contraintes d’intégrité
+
+* **PRIMARY KEY** pour l’identification unique
+* **FOREIGN KEY** pour les relations
+* **CHECK** pour les règles métier (prix > 0, quantité >= 0)
+* **UNIQUE** pour éviter les doublons
+* **NOT NULL** pour garantir des données complètes
+
+---
+
+## 6. Sécurité et gestion des rôles (PostgreSQL)
+
+### 6.1 Rôles définis
+
+* Administrateur
+* Caissier
+* Gestionnaire
+* Auditeur
+
+### 6.2 Gestion des privilèges
+
+Les privilèges sont attribués via **GRANT** et retirés via **REVOKE**, assurant une séparation claire des responsabilités.
+
+---
+
+## 7. Triggers implémentés
+
+### 7.1 Mise à jour automatique du stock
+
+Lorsqu’une ligne de vente est ajoutée, la quantité du produit correspondant est décrémentée automatiquement.
+
+### 7.2 Audit automatique du stock
+
+Toute modification critique du stock est enregistrée dans la table audit_stock.
+
+### 7.3 Fidélisation des clients
+
+Un client devient fidèle automatiquement lorsqu’il dépasse un certain montant d’achats.
+
+---
+
+## 8. Procédures stockées
+
+* Enregistrement d’une vente
+* Approvisionnement du stock
+
+Ces procédures facilitent la réutilisation du code et la cohérence des opérations.
+
+---
+
+## 9. Fonctions SQL
+
+* Calcul du chiffre d’affaires total
+* Calcul du total des achats par client
+
+---
+
+## 10. Sous-requêtes et requêtes DSIG
+
+### Exemples :
+
+* Produits en rupture de stock
+* Clients ayant dépensé plus que la moyenne
+* Produit le plus vendu
+* Employés les plus performants
+
+---
+
+## 11. Résultats et exploitation
+
+Le système permet :
+
+* Un suivi précis du stock
+* Une analyse claire des ventes
+* Une meilleure sécurité des données
+* Une exploitation statistique fiable
+
+---
+
+## 12. Conclusion
+
+Ce projet DSIG démontre la maîtrise des concepts fondamentaux des bases de données relationnelles sous PostgreSQL. Il constitue une solution complète, sécurisée et évolutive pour la gestion d’un supermarché.
+
+---
+
+## 13. Perspectives
+
+* Interface web ou application cliente
+* Gestion multi-magasins
+* Table de promotions et remises
+* Table de fournisseurs secondaires
+
+---
+
+**Auteur :** Muhindo Kisumba Abdiel
+**Cours :** DSIG
+**SGBD :** PostgreSQL
+
